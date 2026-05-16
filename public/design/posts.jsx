@@ -1,5 +1,5 @@
 // Section header — small caps + numerical marker + rule
-function SectionHead({ no, kana, en, action, scheme, T }) {
+function SectionHead({ no, kana, en, action, actionHref, scheme, T }) {
   const isMobile = useIsMobile();
   return (
     <div style={{
@@ -36,7 +36,7 @@ function SectionHead({ no, kana, en, action, scheme, T }) {
         whiteSpace: "nowrap",
       }}>{en}</span>
       <span style={{ flex: 1 }} />
-      {action && <a href="#" style={{
+      {action && <a href={actionHref || "#"} style={{
         fontFamily: T.sans,
         fontSize: 11,
         letterSpacing: "0.16em",
@@ -56,7 +56,7 @@ function PostsSection({ posts, scheme, T }) {
   const isMobile = useIsMobile();
   return (
     <section style={{ paddingTop: T.gap3 }}>
-      <SectionHead no="01" kana="記事" en="Field Notes" action="一覧を見る" scheme={scheme} T={T} />
+      <SectionHead no="01" kana="記事" en="Field Notes" action="一覧を見る" actionHref="/blog/" scheme={scheme} T={T} />
 
       <div style={{ marginBottom: T.gap3 }}>
         {posts.map((p, i) => (

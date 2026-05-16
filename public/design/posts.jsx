@@ -72,7 +72,7 @@ function PostsSection({ posts, scheme, T }) {
           }}>
             <span style={{
               fontFamily: "ui-monospace, monospace",
-              fontSize: isMobile ? 11 : 15,
+              fontSize: isMobile ? 11 : 17,
               letterSpacing: "0.12em",
               color: scheme.muted,
               whiteSpace: "nowrap",

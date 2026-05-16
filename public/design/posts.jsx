@@ -38,7 +38,7 @@ function SectionHead({ no, kana, en, action, actionHref, scheme, T }) {
       <span style={{ flex: 1 }} />
       {action && <a href={actionHref || "#"} style={{
         fontFamily: T.sans,
-        fontSize: isMobile ? 11 : 14,
+        fontSize: isMobile ? 11 : 17,
         letterSpacing: "0.16em",
         color: scheme.fg,
         textTransform: "uppercase",

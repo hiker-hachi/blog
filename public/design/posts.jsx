@@ -13,7 +13,7 @@ function SectionHead({ no, kana, en, action, actionHref, scheme, T }) {
     }}>
       <span style={{
         fontFamily: "ui-monospace, monospace",
-        fontSize: isMobile ? 10 : 14,
+        fontSize: 10,
         letterSpacing: "0.18em",
         color: scheme.muted,
         whiteSpace: "nowrap",
@@ -72,7 +72,7 @@ function PostsSection({ posts, scheme, T }) {
           }}>
             <span style={{
               fontFamily: "ui-monospace, monospace",
-              fontSize: isMobile ? 11 : 15,
+              fontSize: 11,
               letterSpacing: "0.12em",
               color: scheme.muted,
               whiteSpace: "nowrap",

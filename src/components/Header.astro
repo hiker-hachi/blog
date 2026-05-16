@@ -1,0 +1,120 @@
+---
+import { SITE_TITLE } from '../consts';
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header>
+	<nav>
+		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<button class="hamburger" aria-label="メニューを開く" aria-expanded="false">
+			<span>≡</span>
+		</button>
+		<div class="internal-links">
+			<HeaderLink href="/">ホーム</HeaderLink>
+			<HeaderLink href="/blog">記事一覧</HeaderLink>
+<HeaderLink href="/contact">お問い合わせ</HeaderLink>
+			<HeaderLink href="/privacy">プライバシーポリシー</HeaderLink>
+		</div>
+	</nav>
+</header>
+
+<script>
+	const btn = document.querySelector('.hamburger') as HTMLButtonElement;
+	const links = document.querySelector('.internal-links') as HTMLElement;
+
+	btn?.addEventListener('click', () => {
+		const isOpen = links.classList.toggle('open');
+		btn.setAttribute('aria-expanded', String(isOpen));
+	});
+
+	document.addEventListener('click', (e) => {
+		if (!btn?.contains(e.target as Node) && !links?.contains(e.target as Node)) {
+			links?.classList.remove('open');
+			btn?.setAttribute('aria-expanded', 'false');
+		}
+	});
+</script>
+
+<style>
+	header {
+		margin: 0;
+		padding: 0 1em;
+		background: white;
+		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		position: relative;
+	}
+	h2 {
+		margin: 0;
+		font-size: 1em;
+	}
+
+	h2 a,
+	h2 a.active {
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	nav a {
+		padding: 1em 0.5em;
+		color: var(--black);
+		border-bottom: 4px solid transparent;
+		text-decoration: none;
+	}
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+	.social-links,
+	.social-links a {
+		display: flex;
+	}
+	.hamburger {
+		display: none;
+	}
+	@media (max-width: 720px) {
+		.social-links {
+			display: none;
+		}
+		h2 {
+			font-size: 0.95em;
+			white-space: nowrap;
+		}
+		.hamburger {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: none;
+			border: none;
+			font-size: 1.8em;
+			cursor: pointer;
+			padding: 0.3em 0.5em;
+			color: var(--black);
+			line-height: 1;
+		}
+		.internal-links {
+			display: none;
+			position: absolute;
+			top: 100%;
+			right: 0;
+			background: white;
+			box-shadow: 0 4px 12px rgba(var(--black), 10%);
+			flex-direction: column;
+			z-index: 100;
+			min-width: 200px;
+		}
+		.internal-links.open {
+			display: flex;
+		}
+		.internal-links a {
+			padding: 0.8em 1.2em;
+			border-bottom: 1px solid rgba(var(--gray-light), 1);
+			border-left: none;
+		}
+		.internal-links a:last-child {
+			border-bottom: none;
+		}
+	}
+</style>

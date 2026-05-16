@@ -1,0 +1,437 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, heroImageLarge, heroImageCaption } = Astro.props;
+
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
+			.hero-image {
+				width: 100%;
+			}
+			.hero-caption {
+				text-align: center;
+				font-size: 0.85em;
+				color: rgb(var(--gray));
+				margin: 0.4em 0 0;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+				max-width: 720px;
+				max-height: 540px;
+				width: auto;
+				height: auto;
+				object-fit: contain;
+			}
+			@media (min-width: 601px) {
+				.hero-image.hero-large img {
+					max-width: 860px;
+					max-height: 640px;
+				}
+			}
+			.prose {
+				width: 960px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 0.5em 1em;
+				color: rgb(var(--gray-dark));
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+				font-size: 2em;
+				text-wrap: balance;
+			}
+			:global(.prose h2) {
+				font-size: 1.15em;
+				margin: 3em 0 0.6em;
+			}
+			:global(.prose h3) {
+				font-size: 1.6em;
+			}
+			:global(.prose img) {
+				border-radius: 8px;
+			}
+			:global(.prose table) {
+				border-collapse: collapse;
+				margin: 1em auto;
+				font-size: 0.95em;
+			}
+			:global(.prose table th),
+			:global(.prose table td) {
+				border: 1.5px solid rgb(var(--gray));
+				padding: 0.5em 1.2em;
+				text-align: center;
+			}
+			:global(.prose table th) {
+				background-color: rgb(var(--gray) / 0.25);
+				font-weight: bold;
+			}
+			:global(.prose table tr:nth-child(even) td) {
+				background-color: rgb(var(--gray) / 0.08);
+			}
+			:global(.float-left) {
+				float: left;
+				max-width: 340px;
+				margin: 0.3em 1.5em 1em 0;
+			}
+			:global(.float-right) {
+				float: right;
+				max-width: 340px;
+				margin: 0.3em 0 1em 1.5em;
+			}
+			:global(.float-left img),
+			:global(.float-right img) {
+				width: 100%;
+				display: block;
+				margin: 0;
+			}
+			:global(.clear) {
+				clear: both;
+			}
+			:global(.side-by-side) {
+				display: flex;
+				align-items: center;
+				gap: 1.5em;
+				margin: 1em 0;
+			}
+			:global(.side-by-side img) {
+				width: 450px;
+				flex-shrink: 0;
+				border-radius: 8px;
+				display: block;
+				margin: 0;
+			}
+			:global(.text-with-photos) {
+				display: flex;
+				align-items: center;
+				gap: 1.5em;
+				margin: 1em 0;
+			}
+			:global(.text-with-photos) p {
+				flex: 1;
+				margin: 0;
+			}
+			:global(.text-with-photos .photo-pair) {
+				flex-shrink: 0;
+				margin: 0;
+			}
+			:global(.photo-pair) {
+				display: flex;
+				gap: 12px;
+				align-items: center;
+				justify-content: center;
+				margin: 1em auto;
+			}
+			:global(.photo-pair img) {
+				height: 340px;
+				width: auto;
+				max-width: none;
+				object-fit: cover;
+				border-radius: 8px;
+				display: block;
+				margin: 0;
+			}
+			:global(.photo-pair-lg img) {
+				height: 460px;
+			}
+			@media (min-width: 601px) {
+				:global(.text-with-photos.photos-above) {
+					flex-direction: column;
+				}
+				:global(.text-with-photos.photos-above > p) {
+					order: 2;
+					flex: none;
+				}
+				:global(.text-with-photos.photos-above > .photo-pair) {
+					order: 1;
+				}
+				:global(.text-with-photos.photos-above .photo-pair img) {
+					height: 500px;
+				}
+			}
+			:global(.prose img.strap-img) {
+				width: 280px !important;
+			}
+			:global(.prose img.goshuin-img) {
+				width: 220px !important;
+			}
+			:global(.prose img.img-h500) {
+				height: 500px !important;
+				width: auto !important;
+				object-fit: cover;
+				max-width: 100%;
+			}
+			:global(.mobile-only) {
+				display: none;
+			}
+			:global(.mobile-br) {
+				display: none;
+			}
+			:global(.prose img.mountain-svg) {
+				width: 120px !important;
+				height: auto !important;
+				vertical-align: middle;
+				margin-left: 0.4em;
+				display: inline-block;
+			}
+			@media (max-width: 600px) {
+				.hero-image img {
+					max-height: 360px;
+				}
+				.hero-image img.img-landscape {
+					max-height: 250px;
+				}
+				.title h1 {
+					font-size: 1.1em;
+				}
+				:global(.prose h2) {
+					font-size: 1.1em;
+					margin: 2em 0 0.5em;
+				}
+				:global(.prose h3) {
+					font-size: 1.2em;
+				}
+				:global(.float-left),
+				:global(.float-right) {
+					float: none;
+					max-width: 100%;
+					margin: 1em 0;
+				}
+				:global(.side-by-side) {
+					flex-direction: column;
+				}
+				:global(.side-by-side.reverse-mobile) {
+					flex-direction: column-reverse;
+				}
+				:global(.side-by-side img) {
+					width: 100%;
+				}
+				:global(.text-with-photos) {
+					flex-direction: column;
+				}
+				:global(.photo-pair) {
+					flex-direction: column;
+					max-width: 100%;
+					margin: 1em 0;
+				}
+				:global(.photo-pair img) {
+					width: 100%;
+					height: auto;
+				}
+				:global(.prose img) {
+					transform: none !important;
+					height: auto !important;
+				}
+				:global(.prose img.img-landscape) {
+					width: 100% !important;
+				}
+				:global(.prose img.img-portrait) {
+					width: 85% !important;
+					display: block !important;
+					margin-left: auto !important;
+					margin-right: auto !important;
+				}
+				:global(.prose img.strap-img) {
+					width: 220px !important;
+				}
+				:global(.prose img.goshuin-img) {
+					width: 60% !important;
+					display: block !important;
+					margin-left: auto !important;
+					margin-right: auto !important;
+				}
+				:global(.prose img.img-70) {
+					width: 70% !important;
+					display: block !important;
+					margin-left: auto !important;
+					margin-right: auto !important;
+				}
+				:global(.prose img.img-h500) {
+					height: auto !important;
+					width: 100% !important;
+				}
+				:global(.mobile-only) {
+					display: block;
+				}
+				:global(.mobile-br) {
+					display: block;
+				}
+				:global(.mobile-center-h2) {
+					text-align: center;
+				}
+				:global(.prose img.mountain-svg) {
+					width: 120px !important;
+				}
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+			.other-posts {
+				width: 960px;
+				max-width: calc(100% - 2em);
+				margin: 3em auto 1em;
+				padding: 2em 1em 0;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+			.other-posts h2 {
+				font-size: 1.3em;
+				margin-bottom: 1em;
+			}
+			.other-posts ul {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.5em;
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.other-posts li {
+				flex: 1 1 280px;
+			}
+			.other-posts a {
+				display: block;
+				color: rgb(var(--gray-dark));
+				text-decoration: none;
+				transition: opacity 0.2s;
+			}
+			.other-posts a:hover {
+				opacity: 0.7;
+			}
+			.other-posts img {
+				width: 100%;
+				height: auto;
+				border-radius: 8px;
+				display: block;
+			}
+			.other-posts h3 {
+				font-size: 1em;
+				margin: 0.5em 0 0.2em;
+				line-height: 1.4;
+			}
+			.other-posts .post-date {
+				color: rgb(var(--gray));
+				font-size: 0.85em;
+				margin: 0;
+			}
+			.all-posts-link {
+				margin-top: 1.5em;
+				text-align: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class={`hero-image${heroImageLarge ? ' hero-large' : ''}`}>
+					{heroImage && <Image width={960} src={heroImage} alt="" />}
+					{heroImageCaption && <p class="hero-caption">{heroImageCaption}</p>}
+				</div>
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1 set:html={title} />
+						<hr />
+					</div>
+					<slot />
+				</div>
+				{otherPosts.length > 0 && (
+					<div class="other-posts">
+						<h2>他の記事を読む</h2>
+						<ul>
+							{otherPosts.map((post) => (
+								<li>
+									<a href={`/blog/${post.id}/`}>
+										{post.data.heroImage && (
+											<Image width={300} height={200} src={post.data.heroImage} alt="" />
+										)}
+										<div class="post-info">
+											<h3 set:html={post.data.title} />
+											<p class="post-date"><FormattedDate date={post.data.pubDate} /></p>
+										</div>
+									</a>
+								</li>
+							))}
+						</ul>
+						<p class="all-posts-link"><a href="/blog">すべての記事を見る →</a></p>
+					</div>
+				)}
+			</article>
+		</main>
+		<Footer />
+	</body>
+	<script>
+		function classifyImg(img) {
+			if (window.innerWidth > 600) return;
+			if (img.naturalWidth === 0) return;
+			if (img.classList.contains('img-landscape') || img.classList.contains('img-portrait')) return;
+			if (img.naturalWidth >= img.naturalHeight) {
+				img.classList.add('img-landscape');
+			} else {
+				img.classList.add('img-portrait');
+			}
+		}
+		document.addEventListener('DOMContentLoaded', () => {
+			if (window.innerWidth > 600) return;
+			const imgs = document.querySelectorAll('.prose img:not(.strap-img)');
+			imgs.forEach(img => {
+				if (img.complete && img.naturalWidth > 0) {
+					classifyImg(img);
+				} else {
+					img.addEventListener('load', () => classifyImg(img));
+				}
+			});
+			const heroImg = document.querySelector('.hero-image img');
+			if (heroImg) {
+				if (heroImg.complete && heroImg.naturalWidth > 0) {
+					classifyImg(heroImg);
+				} else {
+					heroImg.addEventListener('load', () => classifyImg(heroImg));
+				}
+			}
+		});
+	</script>
+</html>

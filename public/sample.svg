@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+  <!-- 山 -->
+  <path d="M10,100 Q30,60 60,30 Q65,25 70,30 Q100,65 110,100" 
+        fill="none" stroke="#5a7a5a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M70,30 Q100,5 120,30 Q150,65 170,100" 
+        fill="none" stroke="#5a7a5a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 雪 -->
+  <path d="M60,30 Q65,38 70,30 Q75,38 80,33" 
+        fill="white" stroke="#5a7a5a" stroke-width="1.5"/>
+  <path d="M120,30 Q125,38 130,34" 
+        fill="white" stroke="#5a7a5a" stroke-width="1.5"/>
+  <!-- 花 -->
+  <circle cx="30" cy="95" r="5" fill="#e87a9f" opacity="0.8"/>
+  <circle cx="42" cy="90" r="4" fill="#e87a9f" opacity="0.7"/>
+  <circle cx="155" cy="93" r="5" fill="#e87a9f" opacity="0.8"/>
+  <circle cx="167" cy="88" r="4" fill="#e87a9f" opacity="0.7"/>
+</svg>

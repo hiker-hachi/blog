@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "blog",
+      "runtimeExecutable": "/opt/homebrew/Cellar/node/25.9.0_2/bin/node",
+      "runtimeArgs": ["/Users/kaoru/Desktop/blog/node_modules/.bin/astro", "dev", "--port", "4321", "--host"],
+      "port": 4321
+    }
+  ]
+}

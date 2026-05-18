@@ -1,83 +1,46 @@
 ---
-return Astro.redirect('/design/index.html');
 ---
-
 <!doctype html>
 <html lang="ja">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<div class="title-icon">
-				<img src="/sample.svg" alt="山のイラスト" />
-			</div>
-			<h1>一山一会：50代の山支度</h1>
-			<p class="subtitle">信頼できるギアをひとつ選んで山へ行く</p>
-			<div class="photos">
-				<div class="photo-left">
-					<img src="/yakushima.png" alt="屋久島の巨木" />
-				</div>
-				<div class="photo-right">
-					<img src="/yuki.jpg" alt="雪山" />
-					<img src="/miyama.jpg" alt="ミヤマキリシマ" />
-				</div>
-			</div>
-			<p class="intro">50代、162.5cmのアクティブミニマリスト。</p>
-			<p class="intro">2023年6月に登山を始め、3年で60座の山を越えてきました。乳がんの手術を経験し、一度立ち止まったからこそ見えた景色があります。</p>
-			<p class="intro">信頼できるギアと共に歩む登山と旅の記録を綴ります。<br>「自分にとっての心地よさ」を追求する日々の記録です。</p>
-			<p><a href="/blog">記事一覧はこちら →</a></p>
-		</main>
-		<style>
-			.photos {
-				display: flex;
-				gap: 8px;
-				margin: 1em 0;
-				max-height: 400px;
-			}
-			.photo-left {
-				flex: 1;
-			}
-			.photo-left img {
-				width: 100%;
-				height: 400px;
-				object-fit: cover;
-				border-radius: 8px;
-				display: block;
-			}
-			.photo-right {
-				flex: 1;
-				display: flex;
-				flex-direction: column;
-				gap: 8px;
-			}
-			.photo-right img {
-				width: 100%;
-				height: 196px;
-				object-fit: cover;
-				border-radius: 8px;
-				display: block;
-			}
-			.title-icon {
-				text-align: center;
-				margin-bottom: 0.5em;
-			}
-			.title-icon img {
-				width: 180px;
-				height: auto;
-			}
-			.subtitle {
-				color: rgb(var(--gray));
-				font-style: italic;
-				margin-top: -0.8em;
-			}
-			.intro {
-				font-size: 1.05em;
-				line-height: 2;
-				margin-top: 1.5em;
-			}
-		</style>
-		<Footer />
-	</body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>一山一会 — 50代の山支度</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    @media (max-width: 600px) {
+      #root > div {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+      }
+    }
+    body {
+      background: #efe9df;
+      color: #3a2e26;
+      font-family: 'Noto Sans JP', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; }
+    ::selection { background: #a87842; color: #fff; }
+  </style>
+  <script is:inline src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script is:inline src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script is:inline src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script is:inline src="/design/data.js"></script>
+  <script is:inline type="text/babel" src="/design/tweaks-panel.jsx"></script>
+  <script is:inline type="text/babel" src="/design/placeholder.jsx"></script>
+  <script is:inline type="text/babel" src="/design/hero.jsx"></script>
+  <script is:inline type="text/babel" src="/design/posts.jsx"></script>
+  <script is:inline type="text/babel" src="/design/sections.jsx"></script>
+  <script is:inline type="text/babel" src="/design/chrome.jsx"></script>
+  <script is:inline type="text/babel" src="/design/app.jsx"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
 </html>

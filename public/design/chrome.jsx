@@ -395,12 +395,19 @@ function Footer({ scheme, T }) {
           ICHI ZAN ICHI E · A FIELD JOURNAL · EST. 2023.06
         </div>
       </div>
-      <p style={{
-        fontFamily: T.serif, fontSize: 12, color: scheme.muted,
-        lineHeight: 1.85, margin: 0, maxWidth: 360, textAlign: "right",
-      }}>
-        © 2026 一山一会 — このサイトの文章と写真は特記のない限り筆者によるものです。
-      </p>
+      <div style={{ textAlign: "right" }}>
+        <a href="https://instagram.com/hiker_hachi" target="_blank" rel="noopener noreferrer" style={{
+          fontFamily: T.sans, fontSize: 12, color: scheme.fg,
+          textDecoration: "none", borderBottom: `0.5px solid ${scheme.fg}`,
+          paddingBottom: 2,
+        }}>Instagram @hiker_hachi</a>
+        <p style={{
+          fontFamily: T.serif, fontSize: 12, color: scheme.muted,
+          lineHeight: 1.85, margin: "12px 0 0 0", maxWidth: 360,
+        }}>
+          © 2026 一山一会 — このサイトの文章と写真は特記のない限り筆者によるものです。
+        </p>
+      </div>
     </footer>
   );
 }

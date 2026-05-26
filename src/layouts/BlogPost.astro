@@ -363,12 +363,22 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 			:global(.sp-br) {
 				display: none;
 			}
+			:global(h2 .m-line) {
+				display: inline;
+			}
 			@media (max-width: 600px) {
 				:global(.sp-br) {
 					display: block;
 				}
+				:global(br.sp-br) {
+					display: inline;
+				}
 				.title h1 {
 					text-wrap: initial;
+				}
+				:global(h2 .m-line) {
+					display: block;
+					text-align: center;
 				}
 			}
 		</style>

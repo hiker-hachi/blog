@@ -74,7 +74,7 @@ function HeroEditorial({ profile, vertical, scheme, T }) {
           overflow: "hidden",
           background: scheme.imgA,
         }}>
-          <img src="images/hero-yakushima.png"
+          <img src="/design/images/hero-yakushima.png"
                alt="屋久島の巨木 ─ 樹洞から差し込む光"
                style={{
                  width: "100%",

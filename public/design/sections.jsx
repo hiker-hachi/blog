@@ -187,7 +187,7 @@ function AboutSection({ profile, scheme, T }) {
             position: "relative", width: "100%", aspectRatio: "4/3",
             overflow: "hidden", background: scheme.imgA,
           }}>
-            <img src="images/miyamakirishima.jpg"
+            <img src="/design/images/miyamakirishima.jpg"
                  alt="ミヤマキリシマ咲く山"
                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           </div>
@@ -195,7 +195,7 @@ function AboutSection({ profile, scheme, T }) {
             position: "relative", width: "100%", aspectRatio: "4/3",
             overflow: "hidden", background: scheme.imgA,
           }}>
-            <img src="images/snow-mountain.jpg"
+            <img src="/design/images/snow-mountain.jpg"
                  alt="雪山と氷の池"
                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           </div>

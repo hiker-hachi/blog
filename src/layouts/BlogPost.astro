@@ -360,12 +360,15 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 				margin-top: 1.5em;
 				text-align: right;
 			}
-			:global(br.sp-br) {
+			:global(.sp-br) {
 				display: none;
 			}
 			@media (max-width: 600px) {
-				:global(br.sp-br) {
-					display: inline;
+				:global(.sp-br) {
+					display: block;
+				}
+				.title h1 {
+					text-wrap: initial;
 				}
 			}
 		</style>

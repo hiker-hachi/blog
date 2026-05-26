@@ -9,7 +9,7 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, heroImageLarge, heroImageCaption } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImageLarge, heroImageCaption, displayTitle } = Astro.props;
 
 const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -360,6 +360,14 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 				margin-top: 1.5em;
 				text-align: right;
 			}
+			:global(br.sp-br) {
+				display: none;
+			}
+			@media (max-width: 600px) {
+				:global(br.sp-br) {
+					display: block;
+				}
+			}
 		</style>
 	</head>
 
@@ -383,7 +391,7 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 								)
 							}
 						</div>
-						<h1 set:html={title} />
+						<h1 set:html={displayTitle ?? title} />
 						<hr />
 					</div>
 					<slot />

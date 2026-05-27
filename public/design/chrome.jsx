@@ -316,16 +316,16 @@ function TopNav({ scheme, T, categories, logoVariant }) {
           </div>
         </div>
       </div>
-      <div style={{
+      {!isMobile && <div style={{
         fontFamily: "ui-monospace, monospace",
-        fontSize: isMobile ? 9 : (T.readable ? 13 : 11),
-        letterSpacing: isMobile ? "0.06em" : "0.18em",
+        fontSize: T.readable ? 13 : 11,
+        letterSpacing: "0.18em",
         color: scheme.muted,
         textTransform: "uppercase",
         whiteSpace: "nowrap",
       }}>
-        {isMobile ? "Since 2023.06" : "Since 2023.06 — A Field Journal"}
-      </div>
+        Since 2023.06 — A Field Journal
+      </div>}
     </header>
   );
 }

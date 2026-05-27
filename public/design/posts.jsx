@@ -9,7 +9,7 @@ function SectionHead({ no, kana, en, action, actionHref, scheme, T }) {
       paddingBottom: T.gap1,
       borderBottom: `0.5px solid ${scheme.rule}`,
       marginBottom: T.gap2,
-      flexWrap: "nowrap",
+      flexWrap: isMobile ? "wrap" : "nowrap",
     }}>
       <span style={{
         fontFamily: "ui-monospace, monospace",

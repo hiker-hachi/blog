@@ -219,7 +219,7 @@ function AboutSection({ profile, scheme, T }) {
           textWrap: "pretty",
         }}>
           <p style={{ margin: 0 }}>
-            <span style={{ whiteSpace: "nowrap" }}>50代、162.5cm。九州を拠点とするハイカー。</span><br />2023年6月に登山を始め、3年で60座の山を越えてきました。乳がんの手術を経験し、一度立ち止まったからこそ見えた景色があります。
+            <span>50代、162.5cm。九州を拠点とするハイカー。</span><br />2023年6月に登山を始め、3年で60座の山を越えてきました。乳がんの手術を経験し、一度立ち止まったからこそ見えた景色があります。
           </p>
           <p style={{ margin: `${T.gap1}px 0 0`, color: T.readable ? scheme.fg : scheme.muted }}>
             私を支えてくれる相棒たち。その道具と共に歩む、登山や旅の軌跡をここに綴っていきます。

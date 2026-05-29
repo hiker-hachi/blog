@@ -284,11 +284,12 @@ function TopNav({ scheme, T, categories, logoVariant }) {
   return (
     <header style={{
       display: "flex",
-      alignItems: "center",
+      flexDirection: isMobile ? "column" : "row",
+      alignItems: isMobile ? "flex-start" : "center",
       justifyContent: "space-between",
       padding: `${T.gap2}px 0 ${T.gap1}px`,
       borderBottom: `1px solid ${scheme.rule}`,
-      gap: T.gap2,
+      gap: isMobile ? 4 : T.gap2,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <BrandMark size={isMobile ? 44 : (T.readable ? 38 : 32)} color={scheme.fg} accent={scheme.accent}
@@ -316,16 +317,17 @@ function TopNav({ scheme, T, categories, logoVariant }) {
           </div>
         </div>
       </div>
-      {!isMobile && <div style={{
+      <div style={{
         fontFamily: "ui-monospace, monospace",
-        fontSize: T.readable ? 13 : 11,
+        fontSize: isMobile ? 9 : (T.readable ? 13 : 11),
         letterSpacing: "0.18em",
         color: scheme.muted,
         textTransform: "uppercase",
         whiteSpace: "nowrap",
+        paddingLeft: isMobile ? 58 : 0,
       }}>
         Since 2023.06 — A Field Journal
-      </div>}
+      </div>
     </header>
   );
 }

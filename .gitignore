@@ -26,3 +26,4 @@ pnpm-debug.log*
 # Personal notes (affiliate links etc.)
 AFFILIATE_LINKS.md
 TRANSLATION_NOTES.md
+.claude/worktrees/

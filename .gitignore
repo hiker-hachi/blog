@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Personal notes (affiliate links etc.)
+AFFILIATE_LINKS.md
+TRANSLATION_NOTES.md

@@ -134,6 +134,9 @@ hr {
 	main {
 		padding: 1em;
 	}
+	.prose p {
+		margin-bottom: 1.2em;
+	}
 }
 
 .sr-only {

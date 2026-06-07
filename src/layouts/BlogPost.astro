@@ -269,6 +269,10 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 					width: 100%;
 					height: auto;
 				}
+				:global(.photo-pair.pp-fill > figure) {
+					width: 100%;
+					flex: none;
+				}
 				:global(.prose img) {
 					transform: none !important;
 					height: auto !important;

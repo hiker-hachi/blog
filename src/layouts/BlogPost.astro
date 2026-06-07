@@ -462,6 +462,9 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 		function classifyImg(img) {
 			if (window.innerWidth > 600) return;
 			if (img.naturalWidth === 0) return;
+			// 計測用の極小ピクセル（1x1のトラッキング画像など）は対象外。
+			// これを拡大すると巨大な空白になってしまうため。
+			if (img.naturalWidth <= 2 && img.naturalHeight <= 2) return;
 			if (img.classList.contains('img-landscape') || img.classList.contains('img-portrait')) return;
 			if (img.naturalWidth >= img.naturalHeight) {
 				img.classList.add('img-landscape');

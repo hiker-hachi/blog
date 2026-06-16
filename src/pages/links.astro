@@ -10,9 +10,9 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// 平治岳2026を先頭記事として取得
-const featuredPost = allPosts.find((p) => p.id === 'yufudake-shinryoku');
-const otherPosts = allPosts.filter((p) => p.id !== 'yufudake-shinryoku');
+// 中岳を先頭記事（最新リール）として取得
+const featuredPost = allPosts.find((p) => p.id === 'nakadake-miyamakirishima');
+const otherPosts = allPosts.filter((p) => p.id !== 'nakadake-miyamakirishima');
 
 // サムネイル画像を最適化
 async function optimizeThumb(src: Parameters<typeof getImage>[0]['src'] | undefined) {

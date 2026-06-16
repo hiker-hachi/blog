@@ -7,6 +7,7 @@ heroImage: '../../assets/hiijidake-hero.jpg'
 
 import { Image } from 'astro:assets';
 import MoshimoRyusenkan from '../../components/MoshimoRyusenkan.astro';
+import MoshimoMujiShirt from '../../components/MoshimoMujiShirt.astro';
 import yamapCheckpoint from '../../assets/hiijidake-yamap-checkpoint.jpg';
 import ryusenkan2 from '../../assets/hiijidake-ryusenkan-2.jpg';
 import ryusenkan3 from '../../assets/hiijidake-ryusenkan-3.jpg';
@@ -22,7 +23,7 @@ import lunch from '../../assets/hiijidake-lunch.jpg';
 import mitumata from '../../assets/hiijidake-mitumata.jpg';
 import otoike from '../../assets/hiijidake-otoike.jpg';
 import otoike2 from '../../assets/hiijidake-otoike-2.jpg';
-import pack from '../../assets/hiijidake-pack.jpg';
+import mujishirt from '../../assets/hiijidake-mujishirt.jpg';
 
 去年の久住山で見た、ガスの中に揺れるピンクが忘れられなかった。ミヤマキリシマ——九州の高山にしか咲かない、初夏だけの特別なツツジです。くじゅうの中でも、一番美しいと言われる平治岳へ。
 
@@ -107,21 +108,16 @@ import pack from '../../assets/hiijidake-pack.jpg';
 
 登山口を出たところにある「黒岳珈琲」にも立ち寄りました。こちらでは、男池の湧水で淹れたスペシャリティコーヒーをいただくことができます。名水で丁寧に淹れられた一杯は、疲れた体にじわ〜っと染み渡りました。
 
-<h2 class="mobile-center-h2">この日の一枚</h2>
-
-<div class="side-by-side">
-  <Image src={otoike2} alt="無印良品の風を通す半袖布帛ポロシャツ" style="width: 280px; height: 500px; object-fit: cover; object-position: 50% 12%;" />
-  <p>この日着ていたのは無印良品の「風を通す半袖布帛ポロシャツ（メンズS）」。登山用ではありませんが、通気性と吸水速乾性があり、普段使いもできてコスパ抜群です。登山を始めてみようと思っている方には、手に取りやすい一枚だと思います。</p>
-</div>
-
 <h2 class="mobile-center-h2">この日に選んだ相棒</h2>
 
-<div class="side-by-side">
-  <Image src={pack} alt="holoオーブLX-PAC" />
-  <p>今回の山行を支えてくれたのは、ミニマルなデザインとタフさを兼ね備えた「holoオーブLX-PAC」です。本当に必要なものだけを背負って歩く。その軽やかさが心のゆとりとなり、目の前の絶景をより鮮やかに心に届けてくれた気がします。</p>
+<div class="photo-pair">
+  <Image src={otoike2} alt="無印良品の風を通す半袖布帛ポロシャツ（着用）" style="width: 250px; object-fit: cover; object-position: 50% 12%;" />
+  <Image src={mujishirt} alt="無印良品の風を通す半袖布帛ポロシャツ" />
 </div>
 
-[このギアの詳しいレビューはこちら→](/blog/holo-orb-vx21-review/)
+<p>この日着ていたのは無印良品の「風を通す半袖布帛ポロシャツ（メンズS）」。登山用ではありませんが、通気性と吸水速乾性があり、普段使いもできてコスパ抜群です。登山を始めてみようと思っている方には、手に取りやすい一枚だと思います。</p>
+
+<MoshimoMujiShirt />
 
 <h2 class="mobile-center-h2">コースタイム</h2>
 

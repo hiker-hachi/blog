@@ -9,6 +9,8 @@ draft: false
 
 import { Image } from 'astro:assets';
 import MoshimoKujuRyokan from '../../components/MoshimoKujuRyokan.astro';
+import MoshimoCoulee from '../../components/MoshimoCoulee.astro';
+import coulee30 from '../../assets/coulee30.jpg';
 import p1 from '../../assets/hiiji2-1.jpg';
 import p1b from '../../assets/hiiji2-1b.jpg';
 import p1c from '../../assets/hiiji2-1c.jpg';
@@ -281,6 +283,21 @@ import courseTime from '../../assets/hiijidake-yamap-checkpoint-2.jpg';
 <figure style="margin:2em 0;">
   <Image src={p18} alt="苔むす森" />
 </figure>
+
+## この日に選んだ相棒
+
+<div class="side-by-side">
+  <Image src={coulee30} alt="MYSTERY RANCH クーリー30" class="img-h500" />
+  <div>
+    <p>平治岳の樹林帯は、露出した木の根や、せり出した低木で足場が悪く、バランスを取りながら歩くのが意外と難しい道のり。そんなときに頼りになったのが「MYSTERY RANCH クーリー30」です。</p>
+    <p>背中にぴたりと吸い付くようにフィットするので、不安定な足元でも荷物に振られず、体の軸がぶれません。長時間の山行でも疲れにくく、最後まで安心して歩くことができました。</p>
+    <p>足元の不安を相棒に預けられるから、心は目の前のミヤマキリシマへ。体に馴染んだ道具は、いつしか「装備」ではなく「相棒」になる。信頼できる道具は、景色をもっと深く味わわせてくれます。</p>
+  </div>
+</div>
+
+[このギアの詳しいレビューはこちら→](/blog/mysteryrunch-coulee30-review/)
+
+<MoshimoCoulee />
 
 ## コースタイム
 

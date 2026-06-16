@@ -273,9 +273,13 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 					width: 100%;
 					height: auto;
 				}
-				:global(.photo-pair.pp-fill > figure) {
+				:global(.photo-pair.pp-fill > figure),
+				:global(.photo-pair.pp-fill img) {
 					width: 100%;
 					flex: none;
+				}
+				:global(.photo-pair.pp-fill img.img-portrait) {
+					width: 100% !important;
 				}
 				:global(.prose img) {
 					transform: none !important;

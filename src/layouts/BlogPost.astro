@@ -75,7 +75,7 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 				margin: 3em 0 0.6em;
 			}
 			:global(.prose h3) {
-				font-size: 1.6em;
+				font-size: 1.05em;
 			}
 			:global(.prose img) {
 				border-radius: 8px;
@@ -211,6 +211,9 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 				object-fit: cover;
 				max-width: 100%;
 			}
+			:global(.prose img.pc-hide) {
+				display: none !important;
+			}
 			:global(.mobile-only) {
 				display: none;
 			}
@@ -244,7 +247,7 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 					margin: 1em auto !important;
 				}
 				:global(.prose h3) {
-					font-size: 1.2em;
+					font-size: 1.0em;
 				}
 				:global(.float-left),
 				:global(.float-right) {
@@ -289,7 +292,7 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 					width: 100% !important;
 				}
 				:global(.prose img.img-portrait) {
-					width: 85% !important;
+					width: 100% !important;
 					display: block !important;
 					margin-left: auto !important;
 					margin-right: auto !important;
@@ -312,6 +315,12 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 				:global(.prose img.img-h500) {
 					height: auto !important;
 					width: 100% !important;
+				}
+				:global(.prose img.sp-hide) {
+					display: none !important;
+				}
+				:global(.prose img.pc-hide) {
+					display: block !important;
 				}
 				:global(.prose img.img-h600) {
 					height: auto !important;
@@ -470,6 +479,7 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 			// これを拡大すると巨大な空白になってしまうため。
 			if (img.naturalWidth <= 2 && img.naturalHeight <= 2) return;
 			if (img.classList.contains('img-landscape') || img.classList.contains('img-portrait')) return;
+			if (img.classList.contains('pc-hide') || img.classList.contains('sp-hide')) return;
 			if (img.naturalWidth >= img.naturalHeight) {
 				img.classList.add('img-landscape');
 			} else {

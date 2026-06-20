@@ -58,6 +58,7 @@ const posts = (await getCollection('blog'))
 				color: rgb(var(--black));
 				line-height: 1.4;
 				font-size: 1.4rem;
+				text-align: center;
 			}
 			.date {
 				margin: 0;
@@ -106,7 +107,7 @@ const posts = (await getCollection('blog'))
 									{post.data.heroImage && (
 										<Image width={720} height={360} src={post.data.heroImage} alt="" />
 									)}
-									<h4 class="title" set:html={post.data.title} />
+									<h4 class="title" set:html={post.data.displayTitle ?? post.data.title} />
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
 									</p>

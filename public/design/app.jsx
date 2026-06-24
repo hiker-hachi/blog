@@ -59,6 +59,7 @@ function App() {
   const fonts = FONTS[t.fontFamily] || FONTS.mincho;
   const dens = DENSITY[t.density] || DENSITY.comfy;
   const T = { ...dens, ...fonts, readable: !!t.readable };
+  const isMobile = useIsMobile();
 
   React.useEffect(() => {
     document.body.style.background = scheme.bg;
@@ -72,7 +73,7 @@ function App() {
     <div style={{
       maxWidth: T.maxw,
       margin: "0 auto",
-      padding: `0 ${T.side}px`,
+      padding: isMobile ? "0 16px" : `0 ${T.side}px`,
       background: scheme.bg,
       minHeight: "100vh",
     }}>

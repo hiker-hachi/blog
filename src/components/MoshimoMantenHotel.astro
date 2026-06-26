@@ -1,6 +1,9 @@
 ---
 // Moshimo affiliate link for 富山マンテンホテル (楽天トラベル)
 ---
+{/* 本番サイトのみ表示（localhostでは計測ピクシルやリンクを出さない） */}
+{import.meta.env.PROD && (
 <p style="text-align: center; margin: 1.5em 0;">
   <a href="//af.moshimo.com/af/c/click?a_id=5575426&p_id=55&pc_id=55&pl_id=624&url=https%3A%2F%2Ftravel.rakuten.co.jp%2FHOTEL%2F1032%2F1032.html%3Fl-id%3Dpc_top_history_history_hoteltop_1" rel="nofollow" referrerpolicy="no-referrer-when-downgrade">富山マンテンホテルの詳細はこちら →</a><img src="//i.moshimo.com/af/i/impression?a_id=5575426&p_id=55&pc_id=55&pl_id=624" width="1" height="1" style="border:none;" alt="" loading="lazy" />
 </p>
+)}

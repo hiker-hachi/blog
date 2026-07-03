@@ -7,19 +7,22 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { id?: string };
 
-const { title, description, pubDate, updatedDate, heroImage, heroImageLarge, heroImageCaption, displayTitle } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImagePosition, heroImageLarge, heroImageCaption, displayTitle, tags = [], id } = Astro.props;
 
-const allPosts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
+const allPosts = (await getCollection('blog'))
+	.filter((p) => (import.meta.env.DEV || !p.data.draft) && p.id !== id && p.data.title !== title)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// 同じカテゴリ（タグ）の記事を優先して表示する
+const sameCategory = allPosts.filter((p) => p.data.tags.some((t) => tags.includes(t)));
+const rest = allPosts.filter((p) => !sameCategory.includes(p));
+const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} image={heroImage} type="article" />
+		<BaseHead title={title} description={description} image={heroImage} imagePosition={heroImagePosition} type="article" />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -454,7 +457,7 @@ const otherPosts = allPosts.filter((p) => p.data.title !== title).slice(0, 3);
 								<li>
 									<a href={`/blog/${post.id}/`}>
 										{post.data.heroImage && (
-											<Image width={300} height={200} src={post.data.heroImage} alt="" />
+											<Image width={300} height={200} position={post.data.heroImagePosition} src={post.data.heroImage} alt="" />
 										)}
 										<div class="post-info">
 											<h3 set:html={post.data.title} />

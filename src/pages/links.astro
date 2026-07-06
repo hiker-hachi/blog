@@ -10,9 +10,9 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// 中岳を先頭記事（最新リール）として取得
-const featuredPost = allPosts.find((p) => p.id === 'nakadake-miyamakirishima');
-const otherPosts = allPosts.filter((p) => p.id !== 'nakadake-miyamakirishima');
+// ショルダー小物レビューを先頭記事（新着）として取得
+const featuredPost = allPosts.find((p) => p.id === 'shoulder-small-gear');
+const otherPosts = allPosts.filter((p) => p.id !== 'shoulder-small-gear');
 
 // サムネイル画像を最適化
 async function optimizeThumb(src: Parameters<typeof getImage>[0]['src'] | undefined) {
@@ -208,7 +208,7 @@ const thumbs = await Promise.all(
               : <div style="height:300px; background:#c8d8c0;" />
             }
             <div class="featured-overlay">
-              <span class="featured-badge">最新リール</span>
+              <span class="featured-badge">新着記事</span>
               <span class="featured-title">{featuredPost.data.title}</span>
             </div>
           </a>

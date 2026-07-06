@@ -10,10 +10,9 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// 最新記事を自動で特集する（特定の記事を固定したいときは、
-// 下の行を featured = allPosts.find((p) => p.id === 'スラッグ名') に書き換える）
-const featuredPost = allPosts[0];
-const otherPosts = allPosts.filter((p) => p.id !== featuredPost?.id);
+// ショルダー小物レビューを先頭記事（新着）として取得
+const featuredPost = allPosts.find((p) => p.id === 'shoulder-small-gear');
+const otherPosts = allPosts.filter((p) => p.id !== 'shoulder-small-gear');
 
 // サムネイル画像を最適化
 async function optimizeThumb(src: Parameters<typeof getImage>[0]['src'] | undefined) {

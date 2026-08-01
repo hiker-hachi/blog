@@ -10,9 +10,11 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// ショルダー小物レビューを先頭記事（新着）として取得
-const featuredPost = allPosts.find((p) => p.id === 'shoulder-small-gear');
-const otherPosts = allPosts.filter((p) => p.id !== 'shoulder-small-gear');
+// 特集カード（一番上の大きいカード）に出す記事。切り替えるときはここだけ変える
+const FEATURED_ID = 'rokko-fes-afterparty';
+
+const featuredPost = allPosts.find((p) => p.id === FEATURED_ID);
+const otherPosts = allPosts.filter((p) => p.id !== FEATURED_ID);
 
 // サムネイル画像を最適化
 async function optimizeThumb(src: Parameters<typeof getImage>[0]['src'] | undefined) {

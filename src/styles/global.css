@@ -165,4 +165,14 @@ hr {
 }
 .table-scroll table {
   margin: 0 auto;
+  min-width: 620px;          /* 列が潰れて縦長になるのを防ぐ */
+}
+.table-scroll th:first-child,
+.table-scroll td:first-child {
+  white-space: nowrap;       /* 項目名は折り返さない */
+}
+@media (max-width: 600px) {
+  .table-scroll table { font-size: 0.85em; }
+  .table-scroll th,
+  .table-scroll td { padding: 0.45em 0.7em; }
 }

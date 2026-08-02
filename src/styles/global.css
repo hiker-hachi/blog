@@ -156,3 +156,13 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+
+/* 横に広い表をスマホでスクロールできるようにする（囲んだ表だけに効く） */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.5em 0;
+}
+.table-scroll table {
+  margin: 0 auto;
+}

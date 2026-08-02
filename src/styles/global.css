@@ -176,3 +176,14 @@ hr {
   .table-scroll th,
   .table-scroll td { padding: 0.45em 0.7em; }
 }
+
+/* 横スクロールできる表の上に出す案内 */
+.scroll-hint {
+  font-size: 0.8em;
+  color: rgb(var(--gray));
+  text-align: right;
+  margin: 1.5em 0 0.3em;
+}
+@media (min-width: 720px) {
+  .scroll-hint { display: none; }   /* 画面が広く、スクロール不要なときは隠す */
+}

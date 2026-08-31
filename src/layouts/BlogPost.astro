@@ -98,6 +98,10 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 				background-color: rgb(var(--gray) / 0.25);
 				font-weight: bold;
 			}
+			:global(.itinerary table td) {
+				text-align: left;
+				line-break: strict;
+			}
 			:global(.prose table tr:nth-child(even) td) {
 				background-color: rgb(var(--gray) / 0.08);
 			}

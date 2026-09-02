@@ -1,0 +1,37 @@
+---
+// 楽天スーパーSALE の告知。
+// 期間外は表示しない。次回のセールは下のスクリプトの日付2行を書き換えるだけ。
+---
+
+<p class="sale-notice" hidden>
+  <strong>楽天スーパーSALE開催中</strong>（9/4 20:00 〜 9/11 1:59）
+</p>
+
+<style>
+  .sale-notice {
+    margin: 1.5em 0 0.5em;
+    padding: 0.6em 1em;
+    border: 1.5px solid #bf0000;
+    border-radius: 8px;
+    background-color: #fff5f5;
+    color: #333;
+    font-size: 0.95em;
+    text-align: center;
+  }
+  .sale-notice strong {
+    color: #bf0000;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var start = new Date('2026-09-04T20:00:00+09:00').getTime();
+    var end = new Date('2026-09-11T01:59:00+09:00').getTime();
+    var now = Date.now();
+    if (now >= start && now < end) {
+      document.querySelectorAll('.sale-notice').forEach(function (el) {
+        el.hidden = false;
+      });
+    }
+  })();
+</script>

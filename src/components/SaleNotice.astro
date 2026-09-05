@@ -1,37 +1,98 @@
 ---
-// 楽天スーパーSALE の告知。
-// 期間外は表示しない。次回のセールは下のスクリプトの日付2行を書き換えるだけ。
+// 楽天のセール告知。期間中だけ、記事内の楽天アフィリエイトリンクの直下に小さく表示する。
+// 楽天市場（かんたんリンク・商品リンク）と楽天トラベル（宿）は開催期間が違うので出し分ける。
+// 次回のセールは下のスクリプトの periods と、上の2つの文言を書き換えるだけ。
 ---
 
-<p class="sale-notice" hidden>
+{/* テンプレート。スクリプトが複製して各リンクの下に差し込む */}
+<p class="sale-notice-tpl" data-kind="ichiba" hidden>
   <strong>楽天スーパーSALE開催中</strong>（9/4 20:00 〜 9/11 1:59）
 </p>
+<p class="sale-notice-tpl" data-kind="travel" hidden>
+  <strong>楽天トラベル スーパーSALE開催中</strong>（10/1 9:59まで）
+</p>
 
-<style>
-  .sale-notice {
-    margin: 1.5em 0 0.5em;
-    padding: 0.6em 1em;
-    border: 1.5px solid #bf0000;
-    border-radius: 8px;
-    background-color: #fff5f5;
-    color: #333;
-    font-size: 0.95em;
+<style is:global>
+  .sale-notice-inline {
+    margin: 0.1em auto 1.6em;
+    color: #8a7355;
+    font-size: 0.75em;
+    line-height: 1.6;
     text-align: center;
+    letter-spacing: 0.02em;
   }
-  .sale-notice strong {
-    color: #bf0000;
+  .sale-notice-inline strong {
+    color: #5c3d1e;
+    font-weight: 600;
   }
 </style>
 
 <script is:inline>
   (function () {
-    var start = new Date('2026-09-04T20:00:00+09:00').getTime();
-    var end = new Date('2026-09-11T01:59:00+09:00').getTime();
+    var periods = {
+      ichiba: ['2026-09-04T20:00:00+09:00', '2026-09-11T01:59:00+09:00'],
+      travel: ['2026-09-04T20:00:00+09:00', '2026-10-01T09:59:00+09:00']
+    };
+
     var now = Date.now();
-    if (now >= start && now < end) {
-      document.querySelectorAll('.sale-notice').forEach(function (el) {
-        el.hidden = false;
+    var open = {};
+    Object.keys(periods).forEach(function (k) {
+      var s = new Date(periods[k][0]).getTime();
+      var e = new Date(periods[k][1]).getTime();
+      open[k] = now >= s && now < e;
+    });
+    if (!open.ichiba && !open.travel) return;
+
+    var tpl = {};
+    document.querySelectorAll('.sale-notice-tpl').forEach(function (el) {
+      tpl[el.dataset.kind] = el;
+    });
+
+    function nextEl(el) {
+      var n = el.nextElementSibling;
+      while (n && (n.tagName === 'SCRIPT' || n.tagName === 'STYLE')) n = n.nextElementSibling;
+      return n;
+    }
+
+    function place() {
+      var blocks = [];
+      function add(el, kind) {
+        for (var i = 0; i < blocks.length; i++) if (blocks[i].el === el) return;
+        blocks.push({ el: el, kind: kind });
+      }
+      // もしもの通常リンク（宿＝トラベル／商品＝市場）
+      document.querySelectorAll('a[href*="af.moshimo.com"]').forEach(function (a) {
+        var isTravel = a.getAttribute('href').indexOf('travel.rakuten.co.jp') !== -1;
+        var b = a.closest('p, div');
+        if (b) add(b, isTravel ? 'travel' : 'ichiba');
+      });
+      // もしものかんたんリンク（カード型・楽天市場）
+      document.querySelectorAll('[id^="msmaflink-"]').forEach(function (d) {
+        add(d, 'ichiba');
+      });
+
+      function kindOf(el) {
+        for (var i = 0; i < blocks.length; i++) if (blocks[i].el === el) return blocks[i].kind;
+        return null;
+      }
+
+      blocks.forEach(function (b) {
+        if (!open[b.kind] || !tpl[b.kind]) return;
+        var next = nextEl(b.el);
+        if (next && next.classList.contains('sale-notice-inline')) return;
+        // 次も同じ種類のリンクなら、連続の最後にまとめる
+        if (next && kindOf(next) === b.kind) return;
+        var n = tpl[b.kind].cloneNode(true);
+        n.hidden = false;
+        n.removeAttribute('data-kind');
+        n.classList.remove('sale-notice-tpl');
+        n.classList.add('sale-notice-inline');
+        b.el.parentNode.insertBefore(n, b.el.nextSibling);
       });
     }
+
+    place();
+    // かんたんリンクは後から描画されるので、少し待ってもう一度
+    setTimeout(place, 1200);
   })();
 </script>

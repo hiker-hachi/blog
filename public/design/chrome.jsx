@@ -403,6 +403,13 @@ function Footer({ scheme, T }) {
           textDecoration: "none", borderBottom: `0.5px solid ${scheme.fg}`,
           paddingBottom: 2,
         }}>Instagram @hiker_hachi</a>
+        <div style={{
+          fontFamily: T.sans, fontSize: 12, marginTop: 10,
+          display: "flex", gap: 16, justifyContent: "flex-end", flexWrap: "wrap",
+        }}>
+          <a href="/privacy" style={{ color: scheme.muted, textDecoration: "underline" }}>プライバシーポリシー</a>
+          <a href="/contact" style={{ color: scheme.muted, textDecoration: "underline" }}>お問い合わせ</a>
+        </div>
         <p style={{
           fontFamily: T.serif, fontSize: 12, color: scheme.muted,
           lineHeight: 1.85, margin: "12px 0 0 0", maxWidth: 360,

@@ -6,6 +6,10 @@ const today = new Date();
 	<div class="social-links">
 		<a href="https://instagram.com/hiker_hachi" target="_blank" rel="noopener noreferrer">Instagram @hiker_hachi</a>
 	</div>
+	<nav class="footer-links">
+		<a href="/privacy">プライバシーポリシー</a>
+		<a href="/contact">お問い合わせ</a>
+	</nav>
 	&copy; {today.getFullYear()} 一山一会：50代の山支度. All rights reserved.
 </footer>
 <style>
@@ -26,6 +30,21 @@ const today = new Date();
 		color: rgb(var(--gray));
 	}
 	.social-links a:hover {
+		color: rgb(var(--gray-dark));
+	}
+	.footer-links {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 0.5em 1.5em;
+		margin: 1em 0;
+		font-size: 0.9em;
+	}
+	.footer-links a {
+		color: rgb(var(--gray));
+		text-decoration: underline;
+	}
+	.footer-links a:hover {
 		color: rgb(var(--gray-dark));
 	}
 </style>

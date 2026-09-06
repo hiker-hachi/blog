@@ -8,6 +8,10 @@ import { defineConfig, fontProviders } from 'astro/config';
 export default defineConfig({
 	site: 'https://ichizanichie.com',
 	output: 'static',
+	image: {
+		layout: 'constrained',
+		breakpoints: [400, 600, 800, 1200, 1600],
+	},
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{

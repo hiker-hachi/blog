@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="ページが見つかりません"
+	description="お探しのページは見つかりませんでした。"
+	pubDate={new Date('2026-09-06')}
+>
+	<p>お探しのページは見つかりませんでした。<br />
+	引っ越したか、URLが間違っているのかもしれません。</p>
+
+	<p>こちらから探してみてください。</p>
+
+	<ul>
+		<li><a href="/">トップページ</a></li>
+		<li><a href="/blog">記事の一覧</a></li>
+		<li><a href="/blog/my-favorite-gear/">50代女性の愛用登山ギア一覧</a></li>
+		<li><a href="/contact">お問い合わせ</a></li>
+	</ul>
+
+	<p>それでは、また次の山で。<img src="/sample.svg" alt="山のイラスト" class="mountain-svg strap-img" /></p>
+</Layout>

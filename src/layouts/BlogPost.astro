@@ -6,11 +6,12 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import PrNotice from '../components/PrNotice.astro';
 import SaleNotice from '../components/SaleNotice.astro';
 
-type Props = CollectionEntry<'blog'>['data'] & { id?: string };
+type Props = CollectionEntry<'blog'>['data'] & { id?: string; hasAffiliate?: boolean };
 
-const { title, description, pubDate, updatedDate, heroImage, heroImagePosition, heroImageLarge, heroImageCaption, displayTitle, tags = [], id } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImagePosition, heroImageLarge, heroImageCaption, displayTitle, tags = [], id, hasAffiliate = false } = Astro.props;
 
 const allPosts = (await getCollection('blog'))
 	.filter((p) => (import.meta.env.DEV || !p.data.draft) && p.id !== id && p.data.title !== title)
@@ -503,6 +504,7 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 						<h1 set:html={displayTitle ?? title} />
 						<hr />
 					</div>
+					{hasAffiliate && <PrNotice />}
 					<slot />
 					<SaleNotice />
 				</div>

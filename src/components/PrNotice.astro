@@ -1,0 +1,17 @@
+---
+// アフィリエイトリンクを含む記事の冒頭に出す広告表記。
+// 出す・出さないは BlogPost.astro が hasAffiliate で判定する（記事本文に <Moshimo… があるかどうか）。
+---
+
+<p class="pr-notice">※本記事にはアフィリエイト広告（PR）が含まれます</p>
+
+<style>
+	.pr-notice {
+		margin: -0.5em 0 2em;
+		text-align: center;
+		font-size: 0.8em;
+		line-height: 1.6;
+		color: rgb(var(--gray));
+		letter-spacing: 0.02em;
+	}
+</style>

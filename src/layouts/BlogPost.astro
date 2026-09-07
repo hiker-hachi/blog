@@ -388,8 +388,17 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 				:global(.mobile-center-h2) {
 					text-align: center;
 				}
+				/* 「それでは、また次の山で。」の文字が214px、使える幅が303px。
+				   1行に収めるには画像は83px以下でないとはみ出す */
 				:global(.prose img.mountain-svg) {
-					width: 120px !important;
+					width: 80px !important;
+				}
+				/* 記事末尾の「それでは、また次の山で。」＋山のイラスト。
+				   本文側で white-space:nowrap を直書きしているため、狭い画面で
+				   1行に収まらず横にはみ出し、ページ全体に横スクロールが出ていた。
+				   折り返しを許しておく（375px幅なら、これでも1行に収まる）。 */
+				:global(.prose p[style*="nowrap"]) {
+					white-space: normal !important;
 				}
 			}
 			.date {

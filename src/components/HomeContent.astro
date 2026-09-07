@@ -1,0 +1,239 @@
+---
+import { Image } from 'astro:assets';
+import heroYakushima from '../assets/home-hero-yakushima.png';
+import miyamakirishima from '../assets/home-miyamakirishima.jpg';
+import snowMountain from '../assets/home-snow-mountain.jpg';
+
+interface Props {
+	posts: { date: string; cat: string; title: string; url: string }[];
+}
+const { posts } = Astro.props;
+---
+
+<div class="home">
+	<header class="nav">
+		<div class="nav-brand">
+			<svg class="mark" viewBox="0 0 200 120" aria-hidden="true">
+				<path d="M10,100 Q30,60 60,30 Q65,25 70,30 Q100,65 110,100" fill="none" stroke="#2f5238" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+				<path d="M70,30 Q100,5 120,30 Q150,65 170,100" fill="none" stroke="#2f5238" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+				<path d="M60,30 Q65,38 70,30 Q75,38 80,33" fill="white" stroke="#2f5238" stroke-width="2.5" stroke-linejoin="round" />
+				<path d="M120,30 Q125,38 130,34" fill="white" stroke="#2f5238" stroke-width="2.5" stroke-linejoin="round" />
+				<circle cx="22" cy="98" r="6.5" fill="#d94d7a" />
+				<circle cx="46" cy="88" r="5.5" fill="#d94d7a" opacity="0.92" />
+				<circle cx="148" cy="96" r="6.5" fill="#d94d7a" />
+				<circle cx="173" cy="86" r="5.5" fill="#d94d7a" opacity="0.92" />
+			</svg>
+			<div class="nav-titles">
+				<div class="nav-title">一山一会</div>
+				<div class="nav-sub">50代の山支度</div>
+			</div>
+		</div>
+		<div class="nav-since">Since 2023.06 — A Field Journal</div>
+	</header>
+
+	<section class="hero">
+		<div class="hero-text">
+			<div>
+				<h1 class="hero-h1">一山<br /><span class="accent">一会</span></h1>
+				<div class="hero-en">ICHI ZAN ICHI E ─ 50代の山支度</div>
+			</div>
+			<div class="hero-tag">信頼できるギアを<br />ひとつ選んで、山へ行く。</div>
+		</div>
+		<div class="hero-img">
+			<div class="hero-img-inner">
+				<Image src={heroYakushima} alt="屋久島の巨木 ─ 樹洞から差し込む光" widths={[400, 800, 1200]} sizes="(max-width: 600px) 100vw, 640px" />
+			</div>
+		</div>
+	</section>
+
+	<section class="about">
+		<div>
+			<div class="kicker">About the writer</div>
+			<div class="about-photos">
+				<div class="ph"><Image src={miyamakirishima} alt="ミヤマキリシマ咲く山" widths={[400, 800]} sizes="(max-width: 600px) 100vw, 420px" /></div>
+				<div class="ph"><Image src={snowMountain} alt="雪山と氷の池" widths={[400, 800]} sizes="(max-width: 600px) 100vw, 420px" /></div>
+			</div>
+		</div>
+		<div class="about-body">
+			<div class="about-lead">「自分にとっての<br /><span class="accent">心地よさ</span>」を<br />追求する日々の軌跡。</div>
+			<div class="about-text">
+				<p>50代、162.5cm。九州を拠点とするハイカー。<br />2023年6月に登山を始め、3年で60座の山を越えてきました。乳がんの手術を経験し、一度立ち止まったからこそ見えた景色があります。</p>
+				<p>私を支えてくれる相棒たち。その道具と共に歩む、登山や旅の軌跡をここに綴っていきます。</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="posts">
+		<div class="sec-head">
+			<span class="sec-no">§ 01</span>
+			<h2 class="sec-kana">記事</h2>
+			<span class="sec-en">Field Notes</span>
+			<span class="sec-spacer"></span>
+			<a class="sec-action" href="/blog/">一覧を見る →</a>
+		</div>
+		<div class="post-list">
+			{posts.map((p) => (
+				<a class="post" href={p.url}>
+					<span class="post-date">{p.date}</span>
+					<span class="post-date-sp">{p.date.slice(5)}</span>
+					<span class="post-cat">{p.cat}</span>
+					<div class="post-main">
+						<div class="post-cat-sp">{p.cat}</div>
+						<span class="post-title">{p.title}</span>
+					</div>
+				</a>
+			))}
+		</div>
+	</section>
+
+	<div class="index-strip">
+		<div class="index-label">Index</div>
+		<a class="index-link" href="/blog">記事一覧</a>
+		<span class="sec-spacer"></span>
+		<a class="index-all" href="/blog">すべての記事を見る →</a>
+	</div>
+
+	<footer class="foot">
+		<div>
+			<div class="foot-title">一山一会</div>
+			<div class="foot-en">ICHI ZAN ICHI E · A FIELD JOURNAL · EST. 2023.06</div>
+		</div>
+		<div class="foot-right">
+			<a class="foot-ig" href="https://instagram.com/hiker_hachi" target="_blank" rel="noopener noreferrer">Instagram @hiker_hachi</a>
+			<div class="foot-links">
+				<a href="/privacy">プライバシーポリシー</a>
+				<a href="/contact">お問い合わせ</a>
+			</div>
+			<p class="foot-copy">© 2026 一山一会 — このサイトの文章と写真は特記のない限り筆者によるものです。</p>
+		</div>
+	</footer>
+</div>
+
+<style>
+	:root {
+		--bg: #efe9df;
+		--fg: #2a201a;
+		--muted: #5e4f3e;
+		--accent: #9a6a36;
+		--rule: rgba(42, 32, 26, 0.32);
+		--imgA: #d8cfbf;
+		--serif: 'Noto Serif JP', serif;
+		--sans: 'Noto Sans JP', sans-serif;
+		--gap1: 22px;
+		--gap2: 44px;
+		--gap3: 72px;
+	}
+	.home {
+		max-width: 1320px;
+		margin: 0 auto;
+		padding: 0 64px;
+		background: var(--bg);
+		min-height: 100vh;
+		color: var(--fg);
+		font-family: var(--sans);
+	}
+	.accent { color: var(--accent); }
+
+	/* nav */
+	.nav {
+		display: flex; align-items: center; justify-content: space-between;
+		padding: var(--gap2) 0 var(--gap1);
+		border-bottom: 1px solid var(--rule);
+		gap: var(--gap2);
+	}
+	.nav-brand { display: flex; align-items: center; gap: 14px; }
+	.mark { width: 38px; height: 38px; display: block; flex-shrink: 0; }
+	.nav-titles { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+	.nav-title { font-family: var(--serif); font-size: 26px; letter-spacing: 0.1em; line-height: 1.1; white-space: nowrap; }
+	.nav-sub { font-family: var(--serif); font-size: 13px; letter-spacing: 0.1em; color: var(--muted); line-height: 1.2; white-space: nowrap; }
+	.nav-since { font-family: ui-monospace, monospace; font-size: 13px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+
+	/* hero */
+	.hero {
+		display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--gap2);
+		align-items: stretch; padding: var(--gap2) 0 var(--gap3);
+		border-bottom: 0.5px solid var(--rule);
+	}
+	.hero-text { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; padding-right: var(--gap1); }
+	.hero-h1 { font-family: var(--serif); font-size: clamp(56px, 7.4vw, 112px); font-weight: 500; line-height: 0.96; letter-spacing: 0.01em; margin: 0; }
+	.hero-en { margin-top: var(--gap2); font-family: var(--sans); font-size: 24px; letter-spacing: 0.08em; color: var(--muted); }
+	.hero-tag { margin-top: var(--gap2); font-family: var(--serif); font-size: 30px; line-height: 1.7; max-width: 460px; letter-spacing: 0.04em; text-wrap: pretty; }
+	.hero-img { min-width: 0; position: relative; }
+	.hero-img-inner { position: relative; width: 100%; aspect-ratio: 4/5; overflow: hidden; background: var(--imgA); }
+	.hero-img-inner :global(img) { position: absolute; inset: 0; width: 100% !important; height: 100% !important; max-width: 100% !important; object-fit: cover; display: block; }
+
+	/* about */
+	.about > * { min-width: 0; }
+	.about { padding: var(--gap3) 0; display: grid; grid-template-columns: 1fr 1.6fr; gap: var(--gap3); }
+	.kicker { font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-bottom: var(--gap1); }
+	.about-photos { display: flex; flex-direction: column; gap: var(--gap1); }
+	.ph { position: relative; width: 100%; aspect-ratio: 4/3; overflow: hidden; background: var(--imgA); }
+	.ph :global(img) { position: absolute; inset: 0; width: 100% !important; height: 100% !important; max-width: 100% !important; object-fit: cover; display: block; }
+	.about-body { display: flex; flex-direction: column; justify-content: center; }
+	.about-lead { font-family: var(--serif); font-size: clamp(28px, 3.6vw, 44px); font-weight: 500; line-height: 1.55; letter-spacing: 0.02em; text-wrap: balance; }
+	.about-text { font-family: var(--serif); font-size: 19px; line-height: 2.2; margin-top: var(--gap2); max-width: 620px; text-wrap: pretty; }
+	.about-text p { margin: 0; }
+	.about-text p + p { margin-top: var(--gap1); }
+
+	/* posts */
+	.posts { padding-top: var(--gap3); }
+	.sec-head { display: flex; align-items: baseline; gap: var(--gap2); padding-bottom: var(--gap1); border-bottom: 0.5px solid var(--rule); margin-bottom: var(--gap2); }
+	.sec-no { font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); white-space: nowrap; }
+	.sec-kana { font-family: var(--serif); font-size: 22px; font-weight: 500; margin: 0; letter-spacing: 0.04em; white-space: nowrap; }
+	.sec-en { font-family: var(--sans); font-size: 11px; letter-spacing: 0.24em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+	.sec-spacer { flex: 1; }
+	.sec-action { font-family: var(--sans); font-size: 17px; letter-spacing: 0.16em; color: var(--fg); text-transform: uppercase; border-bottom: 0.5px solid var(--fg); text-decoration: none; padding-bottom: 2px; white-space: nowrap; }
+	.post-list { margin-bottom: var(--gap3); }
+	.post { display: grid; grid-template-columns: 7em 6em 1fr; gap: var(--gap1); align-items: baseline; padding: var(--gap1) 0; border-bottom: 0.5px solid var(--rule); text-decoration: none; color: inherit; }
+	.post-date, .post-date-sp { font-family: ui-monospace, monospace; font-size: 17px; letter-spacing: 0.12em; color: var(--muted); white-space: nowrap; }
+	.post-date-sp { display: none; }
+	.post-cat { font-family: var(--sans); font-size: 11px; letter-spacing: 0.06em; color: var(--accent); }
+	.post-cat-sp { display: none; }
+	.post-main { min-width: 0; }
+	.post-title { font-family: var(--serif); font-size: 16px; font-weight: 500; line-height: 1.5; }
+
+	/* index strip */
+	.index-strip { display: flex; align-items: center; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: var(--gap1) 0; }
+	.index-label { font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; padding-right: var(--gap2); border-right: 1px solid var(--rule); white-space: nowrap; }
+	.index-link { font-family: var(--serif); font-size: 19px; color: var(--fg); text-decoration: none; letter-spacing: 0.06em; padding-left: var(--gap2); white-space: nowrap; }
+	.index-all { font-family: var(--sans); font-size: 13px; letter-spacing: 0.18em; color: var(--fg); text-transform: uppercase; text-decoration: none; border-bottom: 1px solid var(--fg); padding-bottom: 2px; white-space: nowrap; }
+
+	/* footer */
+	.foot { margin-top: var(--gap3); padding-top: var(--gap2); padding-bottom: var(--gap2); border-top: 0.5px solid var(--rule); display: flex; align-items: baseline; justify-content: space-between; gap: var(--gap2); }
+	.foot-title { font-family: var(--serif); font-size: 22px; letter-spacing: 0.12em; }
+	.foot-en { font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); margin-top: 6px; }
+	.foot-right { text-align: right; }
+	.foot-ig { font-family: var(--sans); font-size: 12px; color: var(--fg); text-decoration: none; border-bottom: 0.5px solid var(--fg); padding-bottom: 2px; }
+	.foot-links { display: flex; gap: 16px; justify-content: flex-end; flex-wrap: wrap; margin-top: 10px; font-family: var(--sans); font-size: 12px; }
+	.foot-links a { color: var(--muted); text-decoration: underline; }
+	.foot-copy { font-family: var(--serif); font-size: 12px; color: var(--muted); line-height: 1.85; margin: 12px 0 0 0; max-width: 360px; }
+
+	@media (max-width: 600px) {
+		.home { padding: 0 16px; }
+		.nav { flex-direction: column; align-items: flex-start; gap: 4px; }
+		.mark { width: 44px; height: 44px; }
+		.nav-titles { flex-direction: row; align-items: baseline; gap: 6px; }
+		.nav-title { font-size: 17px; }
+		.nav-sub { font-size: 11px; }
+		.nav-since { font-size: 9px; padding-left: 58px; }
+		.hero { grid-template-columns: minmax(0, 1fr); }
+		.hero-text { padding-right: 0; }
+		.hero-h1 { font-size: clamp(36px, 9vw, 52px); }
+		.hero-en { font-size: 13px; }
+		.hero-tag { font-size: 18px; }
+		.about { grid-template-columns: minmax(0, 1fr); }
+		.sec-head { gap: 10px; flex-wrap: wrap; }
+		.sec-kana { font-size: 18px; }
+		.sec-en { letter-spacing: 0.1em; }
+		.sec-action { font-size: 11px; }
+		.post { grid-template-columns: 3em 1fr; gap: 8px; }
+		.post-date { display: none; }
+		.post-date-sp { display: inline; font-size: 11px; }
+		.post-cat { display: none; }
+		.post-cat-sp { display: block; font-family: var(--sans); font-size: 10px; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 2px; }
+		.post-title { font-size: 13px; }
+		.index-label { letter-spacing: 0.1em; padding-right: 12px; }
+		.index-link { font-size: 16px; padding-left: 0; }
+		.index-all { font-size: 11px; letter-spacing: 0.06em; }
+	}
+</style>

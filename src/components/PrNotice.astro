@@ -11,7 +11,11 @@
 		text-align: center;
 		font-size: 0.8em;
 		line-height: 1.6;
-		color: rgb(var(--gray));
+		/* 背景は #fffdf9 → #e8d8c0 のグラデーション（画面に固定）。
+		   --gray のままだと濃いほうでコントラスト比3.37になり、
+		   14.4pxの文字に必要な4.5を下回る。広告表記は明瞭であることが
+		   求められるので、両端で基準を満たす色にする（明6.98／濃5.07）。 */
+		color: #48587c;
 		letter-spacing: 0.02em;
 	}
 </style>

@@ -132,9 +132,16 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 				gap: 1.5em;
 				margin: 1em 0;
 			}
+			:global(.side-by-side > *) {
+				min-width: 0;
+			}
 			:global(.side-by-side img) {
 				width: 560px;
-				flex-shrink: 0;
+				/* flex-shrink:0 だと 560px×2＋余白＝1144px が 960px の枠に収まらず、
+				   パソコンでも横にはみ出していた */
+				flex-shrink: 1;
+				min-width: 0;
+				max-width: 100%;
 				border-radius: 8px;
 				display: block;
 				margin: 0;
@@ -155,6 +162,9 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 			}
 			:global(.photo-pair) {
 				display: flex;
+				/* 高さ固定（img-h600 など）の写真2枚が狭い画面で入りきらないとき、
+				   はみ出さずに下へ折り返す */
+				flex-wrap: wrap;
 				gap: 12px;
 				align-items: center;
 				justify-content: center;
@@ -163,7 +173,7 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 			:global(.photo-pair img) {
 				height: 340px;
 				width: auto;
-				max-width: none;
+				max-width: 100%;
 				object-fit: cover;
 				border-radius: 8px;
 				display: block;
@@ -257,12 +267,27 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 			:global(.mobile-br) {
 				display: none;
 			}
+			/* 本文側で white-space:nowrap を直書きしているため、幅の狭い場所
+			   （side-by-side の中の細い列など）で1行に収まらず横にはみ出していた。
+			   画面幅にかかわらず折り返しを許す。広い場所ではどのみち1行に収まる。 */
+			:global(.prose p[style*="nowrap"]) {
+				white-space: normal !important;
+			}
 			:global(.prose img.mountain-svg) {
 				width: 120px !important;
 				height: auto !important;
 				vertical-align: middle;
 				margin-left: 0.4em;
 				display: inline-block;
+			}
+			/* 本文側で transform:translateX(...) を使って写真の位置を微調整している
+			   箇所がある（白谷雲水峡の太鼓岩）。960pxの本文幅がある画面ではうまく
+			   収まるが、タブレット幅では枠の外へ押し出されて横スクロールが出る。
+			   本文幅が縮む範囲ではずらしを無効にする。 */
+			@media (max-width: 900px) {
+				:global(.prose img) {
+					transform: none !important;
+				}
 			}
 			@media (max-width: 600px) {
 				.hero-image img {

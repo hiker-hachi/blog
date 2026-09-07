@@ -1,6 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
 import HomeContent from '../components/HomeContent.astro';
+import OgFallbackImage from '../assets/fuji-sea-of-clouds.jpg';
+
+// OGP画像。BaseHead.astro の既定画像と同じものを使う
+const ogImage = await getImage({ src: OgFallbackImage, width: 1200, height: 630, format: 'webp' });
+const ogImageUrl = new URL(ogImage.src, Astro.site).toString();
+const siteDescription = '50代・ソロで山を歩く「一山一会」の記録。富士山・屋久島・立山・くじゅうの山行記と、使い込んだ登山ギアのレビューをまとめています。';
 
 const posts = (await getCollection('blog'))
 	.filter((p) => !p.data.draft)
@@ -57,13 +64,21 @@ const blogData = {
   <link rel="canonical" href="https://ichizanichie.com/" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" href="/favicon.ico" />
-  <meta name="description" content="50代・ソロで山を歩く「一山一会」の記録。富士山・屋久島・立山・くじゅうの山行記と、使い込んだ登山ギアのレビューをまとめています。" />
+  <meta name="description" content={siteDescription} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="一山一会：50代の山支度" href="https://ichizanichie.com/rss.xml" />
   <meta property="og:title" content="一山一会 — 50代の山支度" />
+  <meta property="og:description" content={siteDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ichizanichie.com/" />
   <meta property="og:site_name" content="一山一会：50代の山支度" />
   <meta property="og:locale" content="ja_JP" />
+  <meta property="og:image" content={ogImageUrl} />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ichizanichie.com/" />
+  <meta property="twitter:title" content="一山一会 — 50代の山支度" />
+  <meta property="twitter:description" content={siteDescription} />
+  <meta property="twitter:image" content={ogImageUrl} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet" />

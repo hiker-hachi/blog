@@ -7,6 +7,11 @@ heroImage: '../../assets/sunset-hero.jpg'
 heroImageCaption: '南紀白浜・千畳敷の夕暮れ'
 ---
 
+import Image from '../../components/ContentImage.astro';
+import yufuNew from '../../assets/yufu-new.jpg';
+import yakusugi from '../../assets/yakusugi.jpg';
+import koyo from '../../assets/koyo.jpg';
+
 山登りとは無縁だと思っていた私が、今こうして山に登っている。
 
 きっかけは、大分旅行中にたまたま歩いた遊歩道でした。登山ではなく、くじゅう連山を眺めながらのんびり散歩しただけ。それなのに、山の稜線が織りなす景色と澄んだ空気の心地よさが忘れられず、帰宅してすぐ地元の低山へ向かいました。
@@ -25,10 +30,10 @@ heroImageCaption: '南紀白浜・千畳敷の夕暮れ'
 
 <div class="side-by-side">
   <figure style="margin:0; flex:1;">
-    <img src="/yufu-new.jpg" alt="由布岳東峰 1580M" style="width:100%; height:631px; object-fit:cover; object-position:top; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.18);" />
+    <Image src={yufuNew} width={600} alt="由布岳東峰 1580M" style="width:100%; height:631px; object-fit:cover; object-position:top; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.18);" />
   </figure>
   <figure style="margin:0; flex:1;">
-    <img src="/yakusugi.jpg" alt="屋久杉" style="width:100%; height:631px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.18);" />
+    <Image src={yakusugi} width={600} alt="屋久杉" style="width:100%; height:631px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.18);" />
   </figure>
 </div>
 
@@ -90,7 +95,7 @@ heroImageCaption: '南紀白浜・千畳敷の夕暮れ'
   ソロ登山でのヒヤリとした経験や、乳がん後の体調の変化や対処方法など、私なりの視点でお伝えできたらと思っています。
 
 <figure style="margin:2em 0;">
-  <img src="/koyo.jpg" alt="大船山" style="width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.18);" />
+  <Image src={koyo} width={960} alt="大船山" style="width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.18);" />
 </figure>
 
 ---

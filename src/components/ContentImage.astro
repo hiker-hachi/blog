@@ -1,0 +1,22 @@
+---
+// 記事本文の写真。astro:assets の <Image> の薄いラッパー。
+//
+// 元写真は 3000〜4300px あるが、本文の表示幅は最大960px（.prose）。
+// width を指定しないと Astro が元の幅を基準に srcset と sizes を作るため、
+// sizes="(min-width: 3000px) 3000px, 100vw" のようになり、
+// ブラウザが必要より大きい画像を選んでしまう。
+//
+// ここで既定を960pxにしておくと sizes が "(min-width: 960px) 960px, 100vw" になる。
+// 高精細画面向けの 1200w / 1600w / 1920w は Astro が srcset に入れてくれるので画質は落ちない。
+// 個別に width を書いた場合はそちらが優先される。
+import { Image } from 'astro:assets';
+
+const { src, width, ...rest } = Astro.props;
+
+// 元画像より大きい値を渡すと引き伸ばしになるので、元の幅で頭打ちにする
+const intrinsicWidth = typeof src === 'object' && src !== null && 'width' in src ? Number(src.width) : undefined;
+const requested = width ?? 960;
+const finalWidth = intrinsicWidth ? Math.min(requested, intrinsicWidth) : requested;
+---
+
+<Image src={src} width={finalWidth} {...rest} />

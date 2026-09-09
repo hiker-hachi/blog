@@ -16,12 +16,12 @@
 - OGP設定済み（og:title / og:description / og:image / og:type / og:site_name / og:locale）
 - OGP画像は getImage() で自動最適化（WebP・1200x630px・138KB程度）
 - Google Search Console登録・サイトマップ送信済み
-- もしもアフィリエイト連携済み（楽天市場・楽天トラベル・Yahoo!ショッピング）。楽天直・ヤフー直の契約はしていない
+- もしもアフィリエイト連携済み（楽天市場・楽天トラベル・Yahoo!ショッピング・Amazon）。楽天直・ヤフー直・Amazon直の契約はしていない
 - Twitter Card設定済み
 
 ## アフィリエイト
 - もしものリンクを24記事・46コンポーネントに設置済み（2026-09-07時点）
-- Amazon（もしも経由の Amazon.co.jp限定プログラム）は申請予定。一度不合格になっている
+- Amazon（もしも経由の Amazon.co.jp限定プログラム）は 2026-09-09 承認済み（9/8 再申請→翌日承認。7月の1回目は否認）。プライバシーポリシーにAmazon指定の参加文言あり（消さないこと）。本人NG＝自分のリンクから買わない
 - 記事の冒頭に出る広告表記（PR表記）は PrNotice.astro。記事本文に `<Moshimo` があるかで自動判定するので、記事側に書き足す必要はない
 - リンクコンポーネント: src/components/Moshimo〇〇.astro 形式（例：MoshimoMantenHotel.astro、MoshimoHotaruika.astroなど）
 

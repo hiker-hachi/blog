@@ -150,6 +150,19 @@ for (const p of publicFiles) {
 }
 if (unused.length) warns.push(`public/ に使われていないファイル（合計${mb(unusedBytes)}MB）: ${unused.join(', ')}`);
 
+// ---------- 8. 説明（description）の字数 ----------
+// 検索結果では120字あたりで切られる。短すぎると拾われる言葉が減る。
+// 2026-09-09、ドラウトクアッドの説明が143字で後半が表示されない状態だった。
+// 題の字数は見ない。ハチさんの題は長めが持ち味で、毎回警告しても意味がないため。
+for (const f of articleFiles()) {
+	const h = readFileSync(f, 'utf8');
+	const d = h.match(/<meta name="description" content="([^"]*)"/);
+	if (!d) continue;
+	const n = [...d[1]].length;
+	if (n > 125) errors.push(`説明が長い（${n}字・120字から先は検索結果に出ない）: ${label(f)}`);
+	else if (n < 60) warns.push(`説明が短い（${n}字・拾われる言葉が少ない）: ${label(f)}`);
+}
+
 // ---------- 8. alt ----------
 let noAlt = 0;
 for (const f of articleFiles()) {

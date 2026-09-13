@@ -1,8 +1,8 @@
 // サイトの点検スクリプト。`npm run check` で走る。
 //
 // 2026-09-07 の点検で見つかった不備を、次からは自動で拾えるようにしたもの。
-// 見つけられるのは「ファイルを読めば分かること」だけ。実際の横スクロールや
-// 記事の中身の正しさは、ブラウザと人の目でないと分からない。
+// 1〜8 はファイルを読んで分かること。9 は写真の見え方をヘッドレスChromeで測る（2026-09-14 追加）。
+// 記事の中身の正しさや、測っていない崩れ（色・文字の重なりなど）は人の目でないと分からない。
 import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
 import { join, extname } from 'node:path';
 
@@ -176,6 +176,21 @@ for (const f of articleFiles()) {
 	}
 }
 if (noAlt) warns.push(`本文の写真で説明（alt）が無いもの: ${noAlt}枚`);
+
+// ---------- 9. 写真の見え方（ブラウザで測る） ----------
+// 2026-09-14 追加。全記事をパソコン・タブレット・スマホの幅で開き、写真の縮み・切り抜き・
+// 横の文章の細さ・横はみ出しを測る。中身は scripts/check-photos.mjs。30秒ほどかかる。
+{
+	const { measurePhotos, photoProblems } = await import('./check-photos.mjs');
+	const { skipped, result } = await measurePhotos(DIST);
+	if (skipped) warns.push(skipped);
+	else {
+		const p = photoProblems(result);
+		errors.push(...p.errors);
+		warns.push(...p.warns);
+		info.push(`写真の点検: ${Object.keys(result).length}記事 × パソコン1280px・タブレット768px・スマホ390px`);
+	}
+}
 
 // ---------- 出力 ----------
 const line = '─'.repeat(64);

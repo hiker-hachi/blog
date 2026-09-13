@@ -135,6 +135,18 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 			:global(.side-by-side > *) {
 				min-width: 0;
 			}
+			/* 文章の列は幅0から伸ばす（2026-09-13）
+			   9/7 に写真を flex-shrink:1 にしたとき、長い文章の列が本来の幅（1行に並べた長さ）で
+			   場所を取り、写真が幅150〜280pxまで縮んでいた（ティフォン・Doo-Bop など）。
+			   文章を幅0から伸ばすと、パソコンでは 9/7 以前と同じ「写真560px・文章370px」になる。
+			   文章は囲みの38%より細くしない（狭い画面で文章が帯にならないように）。
+			   スマホ（600px以下）は縦並びなので対象外。 */
+			@media (min-width: 601px) {
+				:global(.side-by-side > :not(img)) {
+					flex: 1 1 0;
+					min-width: 38%;
+				}
+			}
 			:global(.side-by-side img) {
 				width: 560px;
 				/* flex-shrink:0 だと 560px×2＋余白＝1144px が 960px の枠に収まらず、

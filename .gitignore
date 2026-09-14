@@ -26,4 +26,7 @@ pnpm-debug.log*
 # Personal notes (affiliate links etc.)
 AFFILIATE_LINKS.md
 TRANSLATION_NOTES.md
+TRANSLATION_yakushima-jomon-sugi-en.md
+# 下書き・添削版・ひな形（リポジトリは公開なので上げない）
+drafts/
 .claude/worktrees/

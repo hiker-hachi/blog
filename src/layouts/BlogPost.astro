@@ -273,6 +273,11 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 				object-fit: cover;
 				max-width: 100%;
 			}
+			/* 洗濯表示などのタグの写真：パソコンでは高さ400px */
+			:global(.prose img.tag-sp) {
+				height: 400px !important;
+				width: auto !important;
+			}
 			:global(.prose img.pc-hide) {
 				display: none !important;
 			}
@@ -421,6 +426,14 @@ const otherPosts = [...sameCategory, ...rest].slice(0, 3);
 				:global(.prose img.img-h600) {
 					height: auto !important;
 					width: 100% !important;
+				}
+				/* 洗濯表示などのタグの写真：スマホでは70%で中央に */
+				:global(.prose img.tag-sp) {
+					width: 70% !important;
+					height: auto !important;
+					display: block !important;
+					margin-left: auto !important;
+					margin-right: auto !important;
 				}
 				:global(.mobile-only) {
 					display: block;

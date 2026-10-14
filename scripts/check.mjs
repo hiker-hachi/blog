@@ -2,6 +2,7 @@
 //
 // 2026-09-07 の点検で見つかった不備を、次からは自動で拾えるようにしたもの。
 // 1〜8 はファイルを読んで分かること。9 は写真の見え方をヘッドレスChromeで測る（2026-09-14 追加）。
+// 10 は記事の元ファイルの文章の点検（重複・見出しの二重・古いリンク名など。2026-10-14 追加）。
 // 記事の中身の正しさや、測っていない崩れ（色・文字の重なりなど）は人の目でないと分からない。
 import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
 import { join, extname } from 'node:path';
@@ -176,6 +177,85 @@ for (const f of articleFiles()) {
 	}
 }
 if (noAlt) warns.push(`本文の写真で説明（alt）が無いもの: ${noAlt}枚`);
+
+// ---------- 10. 文章の点検（記事の元ファイルを読む） ----------
+// 2026-10-14 追加。全記事を読み比べて見つかった不備のうち、機械で拾えるもの。
+// 同じ文の重複（久住山・スマホ用の段落と本文）、見出しの二重（ティフォン）、
+// 言葉の重なり（パンツ比較「ネットに入れ、私はネットに入れて」）、
+// 古いままのリンクの記事名（16か所）、全角数字（中岳）、一度直した言い間違い。
+{
+	const SRC = process.env.CHECK_SRC ?? 'src/content/blog';
+	const posts = readdirSync(SRC).filter((n) => n.endsWith('.mdx')).map((n) => {
+		const raw = readFileSync(join(SRC, n), 'utf8');
+		const fm = raw.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? '';
+		const title = fm.match(/^title: '(.*)'$/m)?.[1] ?? '';
+		const body = raw
+			.replace(/^---\n[\s\S]*?\n---/, '')
+			.replace(/^import .*$/gm, '')
+			.replace(/<script[\s\S]*?<\/script>/g, '')
+			.replace(/\{`[\s\S]*?`\}/g, '')
+			.replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
+		return { slug: n.replace(/\.mdx$/, ''), title, body };
+	});
+	const titles = Object.fromEntries(posts.map((p) => [p.slug, p.title]));
+	// 画面に出る文字だけにする（写真の説明 alt は含めない）
+	const visible = (s) => s
+		.replace(/<[A-Z]\w*[^>]*\/>/g, '')
+		.replace(/<[^>]+>/g, '\n')
+		.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+		.replace(/[*#>|]/g, '');
+
+	for (const { slug, body } of posts) {
+		const lab = `blog/${slug}/`;
+		const text = visible(body);
+
+		// 同じ文が2回（20字以上の文）
+		const seen = new Map();
+		for (const s of text.split(/(?<=。)|\n/).map((x) => x.trim()).filter((x) => [...x].length >= 20)) {
+			seen.set(s, (seen.get(s) ?? 0) + 1);
+		}
+		// わざと2回置いている文（カードの前の説明など）は数えない
+		const OK_TWICE = [/^柄違いで、同じ生地/];
+		for (const [s, n] of seen) if (n > 1 && !OK_TWICE.some((r) => r.test(s))) warns.push(`同じ文が${n}回: ${lab} →「${[...s].slice(0, 30).join('')}…」`);
+
+		// 同じ大きさの見出しが続けて2つ（間に文が無い）
+		const heads = [...body.matchAll(/^(?:(#{2,3}) .+|<h([23])[^>]*>.*<\/h\2>)\s*$/gm)];
+		for (let i = 1; i < heads.length; i++) {
+			const lv = (m) => (m[1] ? m[1].length : Number(m[2]));
+			const between = body.slice(heads[i - 1].index + heads[i - 1][0].length, heads[i].index);
+			if (lv(heads[i - 1]) === lv(heads[i]) && !between.trim()) {
+				warns.push(`見出しが続けて2つ: ${lab} →「${visible(heads[i - 1][0]).trim()}」「${visible(heads[i][0]).trim()}」`);
+			}
+		}
+
+		// 言葉の重なり（「ネットに入れ、私はネットに入れて」のように、近くに同じ6字が2回）
+		// 表の行は同じ言葉が並ぶのが普通なので見ない。間が4字以内のものだけ拾う
+		const noTable = visible(body.split('\n').filter((l) => !l.includes('|')).join('\n'));
+		for (const s of noTable.split(/(?<=。)|\n/)) {
+			const m = s.match(/([^\s、。「」（）・＋\d]{6,})[^＋・]{1,4}?\1/u);
+			if (m) warns.push(`言葉が重なっている: ${lab} →「${[...s.trim()].slice(0, 40).join('')}…」`);
+		}
+
+		// リンクの文字が、リンク先の記事の今のタイトルと違う（記事名として書いているものだけ）
+		for (const m of body.matchAll(/\[([^\]]+)\]\(\/blog\/([a-z0-9-]+)\/?\)/g)) {
+			const [, txt, to] = m;
+			if (!titles[to]) continue;
+			const t = txt.replace(/→$/, '');
+			if (/のレビュー(はこちら)?$/.test(t)) continue;
+			const looksLikeTitle = t.startsWith('【') || t.includes('｜') || [...t].length > 25;
+			if (looksLikeTitle && t !== titles[to]) warns.push(`リンクの記事名が古い: ${lab} →「${[...t].slice(0, 30).join('')}…」（今は「${[...titles[to]].slice(0, 30).join('')}…」）`);
+		}
+
+		// 全角の数字
+		const zen = text.match(/[０-９]+/g);
+		if (zen) warns.push(`全角の数字: ${lab} → ${[...new Set(zen)].join(' ')}`);
+
+		// 一度直した言い間違い
+		for (const [re, right] of [[/背面版/g, '背面板'], [/(?<!ファースト)エイドセット/g, 'ファーストエイドキット'], [/ファーストエマージェンシーキット/g, 'ファーストエイドキット']]) {
+			if (re.test(text)) warns.push(`言い間違いかも: ${lab} →「${re.source.replace(/\(\?<!.*?\)/, '')}」は「${right}」では？`);
+		}
+	}
+}
 
 // ---------- 9. 写真の見え方（ブラウザで測る） ----------
 // 2026-09-14 追加。全記事をパソコン・タブレット・スマホの幅で開き、写真の縮み・切り抜き・

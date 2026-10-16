@@ -1,7 +1,8 @@
 ---
-// 楽天のセール告知。期間中だけ、記事内の楽天アフィリエイトリンクの直下に小さく表示する。
-// 楽天市場（かんたんリンク・商品リンク）と楽天トラベル（宿）は開催期間が違うので出し分ける。
-// 次回のセールは下のスクリプトの periods と、上の2つの文言を書き換えるだけ。
+// セール告知。期間中だけ、記事内のアフィリエイトリンクの直下に小さく表示する。
+// 楽天市場（かんたんリンク・商品リンク）・楽天トラベル（宿）・Amazon（かんたんリンクのAmazonボタン）を出し分ける。
+// 次回のセールは下のスクリプトの periods と、上の文言を書き換えるだけ。
+// 2026-10-16 Amazonプライム感謝祭（10/19 23:59まで）を追加。始まりの時刻はAmazonの告知に無いので、追加した時刻にした。
 ---
 
 {/* テンプレート。スクリプトが複製して各リンクの下に差し込む */}
@@ -10,6 +11,9 @@
 </p>
 <p class="sale-notice-tpl" data-kind="travel" hidden>
   <strong>楽天トラベル スーパーSALE開催中</strong>（10/1 9:59まで）
+</p>
+<p class="sale-notice-tpl" data-kind="amazon" hidden>
+  <strong>Amazonプライム感謝祭開催中</strong><span class="sale-notice-date">（10/19 23:59まで）</span>
 </p>
 
 <style is:global>
@@ -21,6 +25,9 @@
     text-align: center;
     letter-spacing: 0.02em;
   }
+  .sale-notice-inline .sale-notice-date {
+    white-space: nowrap;
+  }
   .sale-notice-inline strong {
     color: #5c3d1e;
     font-weight: 600;
@@ -31,7 +38,8 @@
   (function () {
     var periods = {
       ichiba: ['2026-09-04T20:00:00+09:00', '2026-09-11T01:59:00+09:00'],
-      travel: ['2026-09-04T20:00:00+09:00', '2026-10-01T09:59:00+09:00']
+      travel: ['2026-09-04T20:00:00+09:00', '2026-10-01T09:59:00+09:00'],
+      amazon: ['2026-10-16T09:48:00+09:00', '2026-10-20T00:00:00+09:00']
     };
 
     var now = Date.now();
@@ -41,7 +49,7 @@
       var e = new Date(periods[k][1]).getTime();
       open[k] = now >= s && now < e;
     });
-    if (!open.ichiba && !open.travel) return;
+    if (!open.ichiba && !open.travel && !open.amazon) return;
 
     var tpl = {};
     document.querySelectorAll('.sale-notice-tpl').forEach(function (el) {
@@ -66,9 +74,9 @@
         var b = a.closest('p, div');
         if (b) add(b, isTravel ? 'travel' : 'ichiba');
       });
-      // もしものかんたんリンク（カード型・楽天市場）
+      // もしものかんたんリンク（カード型。楽天市場とAmazonのボタンが付いている）
       document.querySelectorAll('[id^="msmaflink-"]').forEach(function (d) {
-        add(d, 'ichiba');
+        add(d, 'card');
       });
 
       function kindOf(el) {
@@ -77,17 +85,25 @@
       }
 
       blocks.forEach(function (b) {
-        if (!open[b.kind] || !tpl[b.kind]) return;
+        // カードは楽天市場とAmazonの両方のセールが対象
+        var kinds = (b.kind === 'card' ? ['ichiba', 'amazon'] : [b.kind]).filter(function (k) {
+          return open[k] && tpl[k];
+        });
+        if (!kinds.length) return;
         var next = nextEl(b.el);
         if (next && next.classList.contains('sale-notice-inline')) return;
         // 次も同じ種類のリンクなら、連続の最後にまとめる
         if (next && kindOf(next) === b.kind) return;
-        var n = tpl[b.kind].cloneNode(true);
-        n.hidden = false;
-        n.removeAttribute('data-kind');
-        n.classList.remove('sale-notice-tpl');
-        n.classList.add('sale-notice-inline');
-        b.el.parentNode.insertBefore(n, b.el.nextSibling);
+        var after = b.el;
+        kinds.forEach(function (k) {
+          var n = tpl[k].cloneNode(true);
+          n.hidden = false;
+          n.removeAttribute('data-kind');
+          n.classList.remove('sale-notice-tpl');
+          n.classList.add('sale-notice-inline');
+          after.parentNode.insertBefore(n, after.nextSibling);
+          after = n;
+        });
       });
     }
 

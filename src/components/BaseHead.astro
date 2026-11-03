@@ -46,6 +46,23 @@ if (typeof image === 'string') {
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-FTKT91GLD3');
+
+    // もしものカードのボタンが押されたら「どのカードの、どのお店か」を送る（2026-11-03）
+    // GA4 のリンク先URLは途中で切れて、同じ記事のどのカードか見分けられないため
+    var MOSHIMO_SHOPS = { '170': 'amazon', '54': 'rakuten', '1225': 'yahoo' };
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest && e.target.closest('a[href*="af.moshimo.com"]');
+      if (!link) return;
+      var pid = (link.href.match(/[?&]p_id=(\d+)/) || [])[1] || '';
+      var card = link.closest('[id^="msmaflink-"]');
+      var nameEl = card && card.querySelector('[class*="name"]');
+      var name = ((nameEl || card || link).textContent || '').replace(/\s+/g, ' ').trim();
+      gtag('event', 'affiliate_click', {
+        card_name: name.slice(0, 100),
+        shop: MOSHIMO_SHOPS[pid] || ('p_id_' + pid),
+        transport_type: 'beacon'
+      });
+    }, true);
   }
 </script>
 

@@ -69,6 +69,12 @@ import HeaderLink from './HeaderLink.astro';
 		text-decoration: none;
 		border-bottom-color: var(--accent);
 	}
+	/* Astro 7 からリンクの間の空白が消えるので、空白1文字分（約6.7px）をあけ直す（折り返した行の頭にはあけない） */
+	.internal-links {
+		display: flex;
+		flex-wrap: wrap;
+		column-gap: 0.333em;
+	}
 	.social-links,
 	.social-links a {
 		display: flex;
